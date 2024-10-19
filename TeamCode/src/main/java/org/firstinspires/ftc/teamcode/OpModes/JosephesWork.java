@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.acmerobotics.roadrunner.AccelConstraint;
 import com.acmerobotics.roadrunner.AngularVelConstraint;
@@ -11,17 +11,24 @@ import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.TankDrive;
+import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
 import org.firstinspires.ftc.teamcode.tuning.AprilTagLocalization;
 
 import java.util.Arrays;
 
-public final class SplineTest extends LinearOpMode {
+public final class JosephesWork extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {
 
+//        WebcamName webcam1 = hardwareMap.get(WebcamName.class, "Webcam 1");
+////        Position cameraPosition =
+//        AprilTagLocalization.initAprilTagLocalization(webcam1,cameraPosition);
+//        Pose2d startPose = new Pose2d(AprilTagLocalization.getRobotPosition());
 
         Pose2d beginPose = new Pose2d(-31.00, 62.5, Math.toRadians(-90.00));
 //        VelConstraint baseVelConstraint = new MinVelConstraint(Arrays.asList(
