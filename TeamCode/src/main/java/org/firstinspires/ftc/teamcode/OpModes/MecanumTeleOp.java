@@ -17,8 +17,6 @@ import org.firstinspires.ftc.teamcode.math.maths.vectors.Vector3d;
 import org.firstinspires.ftc.teamcode.gamepad.InputAutoMapper;
 import org.firstinspires.ftc.teamcode.gamepad.InputHandler;
 
-import java.util.HashMap;
-
 @TeleOp
 public class MecanumTeleOp extends OpMode {
     NewMecanumDrive drive;
@@ -47,7 +45,6 @@ public class MecanumTeleOp extends OpMode {
     boolean resetHeading = false;
     DcMotor paralellEncoder;
 
-
     @Override
     public void init() {
         //init dpad hashmap with each dpad value as unpressed
@@ -59,7 +56,6 @@ public class MecanumTeleOp extends OpMode {
         imu.resetYaw();
         or = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
         globalIMUHeading = or.thirdAngle;
-
 
         //initialize drive, empty Vector as we are not using the Roadrunner drive methods in TeleOp
         drive = new NewMecanumDrive(hardwareMap, new Pose2d(new Vector2d(0, 0), 0));
@@ -73,7 +69,6 @@ public class MecanumTeleOp extends OpMode {
         //Initialize encoder wheels
         //paralellEncoder = hardwareMap.get(DcMotor.class, "parallelEncoder");
         //paralellEncoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 
     @Override
@@ -91,7 +86,6 @@ public class MecanumTeleOp extends OpMode {
         telemetry.addData("par0: ", drive.rightBack.getCurrentPosition());
         telemetry.addData("par1: ", drive.leftBack.getCurrentPosition());
         telemetry.addData("perp ", drive.rightFront.getCurrentPosition());
-
 
         or = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
         headingError = or.thirdAngle - globalIMUHeading;
@@ -122,10 +116,8 @@ public class MecanumTeleOp extends OpMode {
                 resetHeading = false;
             }
         }
-
     }
     public void outputLog() {
-
     }
 }
 
