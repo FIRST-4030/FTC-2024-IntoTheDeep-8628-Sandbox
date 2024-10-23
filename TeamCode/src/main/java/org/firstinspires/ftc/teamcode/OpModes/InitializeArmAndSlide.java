@@ -43,7 +43,7 @@ public class InitializeArmAndSlide {
             if (armTouchSensor.isPressed()) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 arm.setPower(1.0);
-//        if(reverse) {arm.setDirection(DcMotorSimple.Direction.REVERSE);}
+//          if(reverse) {arm.setDirection(DcMotorSimple.Direction.REVERSE);}
                 arm.setTargetPosition(10);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

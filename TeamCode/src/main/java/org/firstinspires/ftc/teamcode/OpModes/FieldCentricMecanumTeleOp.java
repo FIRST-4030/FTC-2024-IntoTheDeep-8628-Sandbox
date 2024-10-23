@@ -43,6 +43,7 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
         int slideHighBucketPosition = 2200;
         int armHighBucketPosition = 3380;
         int slideBeginsExtendingForHighBucket = 1500;
+        int wristBeginsFlippingForHighBucket = 2600;
         double wristHighBucketDeliverPosition = 0.84;
         // Declare our motors
         // Make sure your ID's match your configuration
@@ -92,7 +93,7 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
         // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
@@ -111,7 +112,6 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
                 x *= slowSpeed;
                 rx *= slowSpeed;
             }
-
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
@@ -173,19 +173,25 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
             if (gamepad2.y){
                 armTargetPosition = armHighBucketPosition;
                 arm.setTargetPosition(armTargetPosition);
-                if (arm.getCurrentPosition() > slideBeginsExtendingForHighBucket){
+                int currentArmPosition = arm.getCurrentPosition();
+                if (currentArmPosition > slideBeginsExtendingForHighBucket){
                     slideTargetPosition = slideHighBucketPosition;
                     slide.setTargetPosition(slideTargetPosition);
-                    wrist.setPosition(wristHighBucketDeliverPosition);
+                    if (currentArmPosition > wristBeginsFlippingForHighBucket) {
+                        wristTargetPosition = wristHighBucketDeliverPosition;
+                        wrist.setPosition(wristTargetPosition);
+                    }
                 }
             }
             if (gamepad2.a){
                 armTargetPosition = armMinPosition;
                 arm.setTargetPosition(armTargetPosition);
+
                 if (arm.getCurrentPosition() > slideBeginsExtendingForHighBucket){
                     slideTargetPosition = slideMinPosition;
                     slide.setTargetPosition(slideTargetPosition);
-                    wrist.setPosition(wristSubmersible);
+                    wristTargetPosition = wristSubmersible;
+                    wrist.setPosition(wristTargetPosition);
                 }
             }
 
