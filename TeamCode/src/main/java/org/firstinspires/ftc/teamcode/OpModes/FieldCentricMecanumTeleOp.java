@@ -170,6 +170,13 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
                 clawTargetPosition = Math.max (clawMin,clawTargetPosition);
                 claw.setPosition(clawTargetPosition);
             }
+            if (gamepad2.right_trigger > 0){
+                wristTargetPosition = wristMin;
+                wrist.setPosition(wristTargetPosition);
+            } else if (gamepad2.left_trigger > 0){
+                wristTargetPosition = wristMax;
+                wrist.setPosition(wristTargetPosition);
+            }
             if (gamepad2.y){
                 armTargetPosition = armHighBucketPosition;
                 arm.setTargetPosition(armTargetPosition);
