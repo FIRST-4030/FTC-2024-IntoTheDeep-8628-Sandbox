@@ -61,16 +61,16 @@ MecanumDrive {
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.UP;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
+                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT;
 
         // drive model parameters
-        public double inPerTick = 0.0019792182;
-        public double lateralInPerTick = inPerTick;
-        public double trackWidthTicks = 5943.475305543868;
+        public double inPerTick = 0.0019507;
+        public double lateralInPerTick = 0.0014813787621439458;
+        public double trackWidthTicks = 6515.285086359832;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.7458172035468942;
-        public double kV = 0.0003913571544852509;
+        public double kS = 0.9144270581159493;
+        public double kV = 0.00039118603429103265;
         public double kA = 0.00005;
 
         // path profile parameters (in inches)
@@ -230,8 +230,14 @@ MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // TODO: reverse motor directions if needed
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        //leftBack.setDirection(DcMotor.Direction.REVERSE);
+//        leftFront.setDirection(DcMotor.Direction.REVERSE);
+//        leftBack.setDirection(DcMotor.Direction.REVERSE);
+//        rightFront.setDirection(DcMotor.Direction.REVERSE);
+
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.FORWARD);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        rightBack.setDirection(DcMotor.Direction.REVERSE);
 
         // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html

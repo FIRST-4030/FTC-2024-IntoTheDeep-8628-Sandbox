@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.teamcode.BuildConfig;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Pose2dWrapper;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
@@ -23,15 +24,15 @@ import org.firstinspires.ftc.teamcode.ComputerVision;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "MecanumAuto")
+@Autonomous(name = "MecanumAuto", group="8628")
 public final class MecanumAuto extends LinearOpMode {
     public static double INITIAL_X = -6;
     public static double INITIAL_Y = 55;
 
     public static double ROTATIONINITIAL = 0;
 
-    public static double PLACEONE_X = -36;
-    public static double PLACEONE_Y = 50;
+    public static double PLACEONE_X = -45;
+    public static double PLACEONE_Y = 54;
 
     public static double PLACETWO_X = -40;
     public static double PLACETWO_Y = 43;
@@ -114,7 +115,8 @@ public final class MecanumAuto extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPose.toPose2d());
 
         if (opModeInInit()) {
-            telemetry.addData("Software was compiled on:", "aaa");
+            String compilationDate = BuildConfig.COMPILATION_DATE;
+            telemetry.addData("Compiled on:", compilationDate);
             telemetry.update();
         }
 
@@ -123,7 +125,9 @@ public final class MecanumAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(startPose.toPose2d())
-                        .splineToConstantHeading(new Vector2d(PLACEONE_X, PLACEONE_Y), Math.toRadians(-90.0), baseVelConstraint,baseAccelConstraint)
+                        .strafeToConstantHeading(poseOne.toPose2d().position, baseVelConstraint,baseAccelConstraint)
+//                        .strafeToConstantHeading(new Vector2d(PLACEONE_X, PLACEONE_Y), baseVelConstraint,baseAccelConstraint)
+//                        .splineToConstantHeading(new Vector2d(PLACEONE_X, PLACEONE_Y), Math.toRadians(-90.0), baseVelConstraint,baseAccelConstraint)
                         //.strafeTo(poseOne.toPose2d().position)
                         //.strafeTo(poseTwo.toPose2d().position)
                         //.strafeTo(poseThree.toPose2d().position)

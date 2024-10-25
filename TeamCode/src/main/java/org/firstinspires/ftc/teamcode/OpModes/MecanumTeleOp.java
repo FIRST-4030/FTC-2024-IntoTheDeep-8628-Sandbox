@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -17,7 +18,8 @@ import org.firstinspires.ftc.teamcode.math.maths.vectors.Vector3d;
 import org.firstinspires.ftc.teamcode.gamepad.InputAutoMapper;
 import org.firstinspires.ftc.teamcode.gamepad.InputHandler;
 
-@TeleOp
+@Config
+@TeleOp(name = "MecanumTeleOp", group="8628")
 public class MecanumTeleOp extends OpMode {
     NewMecanumDrive drive;
     InputHandler inputHandler;

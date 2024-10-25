@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,8 +14,10 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.BuildConfig;
 
-@TeleOp
+@Config
+@TeleOp(name = "FieldCentricMecanumTeleOp", group="X8628")
 public class FieldCentricMecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -71,7 +74,6 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
         arm.setDirection(DcMotorSimple.Direction.REVERSE);
         slide.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setPower(1.0);
 //        if(reverse) {arm.setDirection(DcMotorSimple.Direction.REVERSE);}
@@ -96,6 +98,12 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
                 RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
+
+        if (opModeInInit()) {
+            String compilationDate = BuildConfig.COMPILATION_DATE;
+            telemetry.addData("Compiled on:", compilationDate);
+            telemetry.update();
+        }
 
         waitForStart();
 

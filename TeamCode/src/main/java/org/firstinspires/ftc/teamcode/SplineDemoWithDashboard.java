@@ -11,12 +11,14 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
 
 import java.util.Arrays;
 
 @Config
+@TeleOp(name = "SplineDemoWithDashboard", group="Tuning")
 public final class SplineDemoWithDashboard extends LinearOpMode {
     public static double INITIAL_X = -7;
     public static double INITIAL_Y = 62.5;
