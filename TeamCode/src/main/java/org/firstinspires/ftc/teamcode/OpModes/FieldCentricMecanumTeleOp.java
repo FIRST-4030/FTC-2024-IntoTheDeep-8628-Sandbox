@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.BuildConfig;
 
 @Config
-@TeleOp(name = "FieldCentricMecanumTeleOp", group="X8628")
+@TeleOp(name = "FieldCentricMecanumTeleOp")
 public class FieldCentricMecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
