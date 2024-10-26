@@ -16,16 +16,17 @@ import org.firstinspires.ftc.teamcode.BuildConfig;
 @Config
 @TeleOp(name = "FieldCentricMecanumTeleOp")
 public class FieldCentricMecanumTeleOp extends LinearOpMode {
+    public static int armMaxPosition = 3270;
+    public static int slideMaxHorizontalPosition = 1060;
+    public static int slideMaxVerticalPosition = 2300;
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Put constants here
-        int armMaxPosition = 3270;
         int armTargetPosition = 10;
         int armMinPosition = 10;
         int armRotationSpeed = 20;
         int armBoundingBoxEnforcedPosition = 2600;
-        int slideMaxVerticalPosition = 2300;
-        int slideMaxHorizontalPosition = 1060;
         int slideTargetPosition = 10;
         int slideMinPosition = 10;
         int slideMovementSpeed = 10;

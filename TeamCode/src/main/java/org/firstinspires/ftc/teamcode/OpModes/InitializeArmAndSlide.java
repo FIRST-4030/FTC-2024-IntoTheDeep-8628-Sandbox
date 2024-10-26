@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 
 public class InitializeArmAndSlide {
 
@@ -20,7 +16,7 @@ public class InitializeArmAndSlide {
         slide.setPower(-0.7);
         arm.setPower(0.0);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wrist.setPosition(0.89);
+        wrist.setPosition(1.0);
         claw.setPosition(1.0);
         while (true){
             if (slideTouchSensor.isPressed()){
