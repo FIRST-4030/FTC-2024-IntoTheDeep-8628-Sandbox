@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -22,32 +19,37 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Put constants here
-        int armMaxPosition = 3380;
+        int armMaxPosition = 3270;
         int armTargetPosition = 10;
         int armMinPosition = 10;
         int armRotationSpeed = 20;
-        int slideMaxPosition = 2300;
+        int armBoundingBoxEnforcedPosition = 2600;
+        int slideMaxVerticalPosition = 2300;
+        int slideMaxHorizontalPosition = 1060;
         int slideTargetPosition = 10;
         int slideMinPosition = 10;
         int slideMovementSpeed = 10;
         double clawTargetPosition = 0.5;
         double clawSpeed = 1.0/30.0;
         double clawMax = 1.0;
-        double clawMin = 0.46;
+        double clawMin = 0.25;
         double wristTargetPosition = 0.5;
         double wristSpeed = 1.0/300.0;
-        double wristMax = 0.89;
-        double wristMin = 0.03;
+        double wristMax = 0.95;
+        double wristMin = 0.12;
+
+        double wristStraightUp = 0.5;
 
         double slowSpeed = 0.5;
 
         double wristSubmersible = 0.2;
         // driver assist high bucket arm, slide and wrist movement
         int slideHighBucketPosition = 2200;
-        int armHighBucketPosition = 3380;
+        int armHighBucketPosition = 3270;
         int slideBeginsExtendingForHighBucket = 1500;
-        int wristBeginsFlippingForHighBucket = 2600;
-        double wristHighBucketDeliverPosition = 0.84;
+        int wristBeginsFlippingForHighBucketArm = 3200;
+        int wristBeginsFlippingForHighBucketSlide = 2100;
+        double wristHighBucketDeliverPosition = 0.95;
         // Declare our motors
         // Make sure your ID's match your configuration
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("leftFront");
@@ -62,6 +64,8 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
         DcMotor arm = hardwareMap.dcMotor.get("arm");
         Servo claw = hardwareMap.servo.get("claw");
         Servo wrist = hardwareMap.servo.get("wrist");
+        TouchSensor armTouchSensor = hardwareMap.get(TouchSensor.class, "armTouchSensor");
+        TouchSensor slideTouchSensor = hardwareMap.get(TouchSensor.class, "slideTouchSensor");
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -108,8 +112,6 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-        TouchSensor armTouchSensor = hardwareMap.get(TouchSensor.class, "armTouchSensor");
-        TouchSensor slideTouchSensor = hardwareMap.get(TouchSensor.class, "slideTouchSensor");
         InitializeArmAndSlide.initializeArmAndSlide(telemetry, claw, wrist, slide, arm, slideTouchSensor, armTouchSensor);
         while (opModeIsActive()) {
             double y = gamepad1.left_stick_y; // Remember, Y stick value is reversed
@@ -153,11 +155,19 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
             if (gamepad2.left_stick_y != 0){
                 armTargetPosition += Math.floor(-gamepad2.left_stick_y*armRotationSpeed);
                 armTargetPosition = Math.min(Math.max(armMinPosition,armTargetPosition),armMaxPosition);
+                if (arm.getCurrentPosition() < armBoundingBoxEnforcedPosition){
+                    slideTargetPosition = Math.min(Math.max(slideMinPosition,slideTargetPosition), slideMaxHorizontalPosition);
+                    slide.setTargetPosition(slideTargetPosition);
+                }
                 arm.setTargetPosition(armTargetPosition);
             }
             if (gamepad2.right_stick_y != 0){
                 slideTargetPosition += Math.floor(-gamepad2.right_stick_y*slideMovementSpeed);
-                slideTargetPosition = Math.min(Math.max(slideMinPosition,slideTargetPosition),slideMaxPosition);
+                if (arm.getCurrentPosition() > armBoundingBoxEnforcedPosition){
+                    slideTargetPosition = Math.min(Math.max(slideMinPosition,slideTargetPosition), slideMaxVerticalPosition);
+                } else {
+                    slideTargetPosition = Math.min(Math.max(slideMinPosition,slideTargetPosition), slideMaxHorizontalPosition);
+                }
                 slide.setTargetPosition(slideTargetPosition);
             }
             if (gamepad2.dpad_up){
@@ -178,10 +188,10 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
                 clawTargetPosition = Math.max (clawMin,clawTargetPosition);
                 claw.setPosition(clawTargetPosition);
             }
-            if (gamepad2.right_trigger > 0){
+            if (gamepad2.right_trigger > 0.2){
                 wristTargetPosition = wristMin;
                 wrist.setPosition(wristTargetPosition);
-            } else if (gamepad2.left_trigger > 0){
+            } else if (gamepad2.left_trigger > 0.2){
                 wristTargetPosition = wristMax;
                 wrist.setPosition(wristTargetPosition);
             }
@@ -189,10 +199,14 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
                 armTargetPosition = armHighBucketPosition;
                 arm.setTargetPosition(armTargetPosition);
                 int currentArmPosition = arm.getCurrentPosition();
+                if (currentArmPosition < wristBeginsFlippingForHighBucketArm) {
+                    wristTargetPosition = wristStraightUp;
+                    wrist.setPosition(wristTargetPosition);
+                }
                 if (currentArmPosition > slideBeginsExtendingForHighBucket){
                     slideTargetPosition = slideHighBucketPosition;
                     slide.setTargetPosition(slideTargetPosition);
-                    if (currentArmPosition > wristBeginsFlippingForHighBucket) {
+                    if (currentArmPosition > wristBeginsFlippingForHighBucketArm && slide.getCurrentPosition() > wristBeginsFlippingForHighBucketSlide) {
                         wristTargetPosition = wristHighBucketDeliverPosition;
                         wrist.setPosition(wristTargetPosition);
                     }
@@ -201,13 +215,10 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
             if (gamepad2.a){
                 armTargetPosition = armMinPosition;
                 arm.setTargetPosition(armTargetPosition);
-
-                if (arm.getCurrentPosition() > slideBeginsExtendingForHighBucket){
-                    slideTargetPosition = slideMinPosition;
-                    slide.setTargetPosition(slideTargetPosition);
-                    wristTargetPosition = wristSubmersible;
-                    wrist.setPosition(wristTargetPosition);
-                }
+                slideTargetPosition = slideMinPosition;
+                slide.setTargetPosition(slideTargetPosition);
+                wristTargetPosition = wristSubmersible;
+                wrist.setPosition(wristTargetPosition);
             }
 
             telemetry.addData("armPosition", arm.getCurrentPosition());
