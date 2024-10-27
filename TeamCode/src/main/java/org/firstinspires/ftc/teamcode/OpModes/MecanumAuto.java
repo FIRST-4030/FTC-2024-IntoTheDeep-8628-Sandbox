@@ -71,7 +71,7 @@ public final class MecanumAuto extends LinearOpMode {
     public static int slidePickupPosition = 228;
     public static double wristHighBucketDeliverPosition = 0.95;
     public static double wristPickupPosition = 0.38;
-    double wristStraightUp = 0.2;
+    double wristStraightUp = 0.3;
     double clawOpen = 0.25;
     double clawClosed = 1.0;
 
@@ -163,12 +163,7 @@ public final class MecanumAuto extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPose.toPose2d());
 
-        if (opModeInInit()) {
-            String compilationDate = BuildConfig.COMPILATION_DATE;
-            telemetry.addData("Compiled on:", compilationDate);
-            telemetry.update();
-        }
-        InitializeArmAndSlide.initializeArmAndSlide(telemetry, claw, wrist, slide, arm, slideTouchSensor, armTouchSensor);
+         InitializeArmAndSlide.initializeArmAndSlide(telemetry, claw, wrist, slide, arm, slideTouchSensor, armTouchSensor);
 
         waitForStart();
 //                        .splineToConstantHeading(new Vector2d(-33.0, 30.00), Math.toRadians(-90.0), baseVelConstraint,baseAccelConstraint)
@@ -230,7 +225,7 @@ public final class MecanumAuto extends LinearOpMode {
             while(slide.getCurrentPosition() < (slideHighBucketPosition-100)){
                 sleep(10);
             }
-            wrist.setPosition(wristHighBucketDeliverPosition);
+            wrist.setPosition(0.95);
             sleep(1000);
             claw.setPosition(clawOpen);
             sleep(500);

@@ -37,7 +37,7 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
         double wristTargetPosition = 0.5;
         double wristSpeed = 1.0/300.0;
         double wristMax = 0.95;
-        double wristMin = 0.12;
+        double wristMin = 0.3;
 
         double wristStraightUp = 0.5;
 
@@ -130,6 +130,10 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
             if (gamepad1.options) {
                 imu.resetYaw();
             }
+            if (gamepad1.back) {
+                InitializeArmAndSlide.initializeArmAndSlide(telemetry, claw, wrist, slide, arm, slideTouchSensor, armTouchSensor);
+            }
+
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
@@ -214,12 +218,17 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
                 }
             }
             if (gamepad2.a){
-                armTargetPosition = armMinPosition;
+                armTargetPosition = 369;
                 arm.setTargetPosition(armTargetPosition);
+                wristTargetPosition = 0.327;
+                wrist.setPosition(wristTargetPosition);
+
+//                armTargetPosition = armMinPosition;
+//                arm.setTargetPosition(armTargetPosition);
                 slideTargetPosition = slideMinPosition;
                 slide.setTargetPosition(slideTargetPosition);
-                wristTargetPosition = wristSubmersible;
-                wrist.setPosition(wristTargetPosition);
+//                wristTargetPosition = wristSubmersible;
+//                wrist.setPosition(wristTargetPosition);
             }
 
             telemetry.addData("armPosition", arm.getCurrentPosition());

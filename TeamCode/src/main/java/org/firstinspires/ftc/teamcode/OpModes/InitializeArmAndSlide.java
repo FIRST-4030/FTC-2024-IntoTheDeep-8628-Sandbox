@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.BuildConfig;
 
 public class InitializeArmAndSlide {
 
@@ -49,6 +50,8 @@ public class InitializeArmAndSlide {
             telemetry.addLine("arm moving to zero");
             telemetry.addData("slide sensor pushed", slideTouchSensor.isPressed());
             telemetry.addData("arm sensor pushed", armTouchSensor.isPressed());
+            String compilationDate = BuildConfig.COMPILATION_DATE;
+            telemetry.addData("Compiled on:", compilationDate);
             telemetry.update();
         }
 
