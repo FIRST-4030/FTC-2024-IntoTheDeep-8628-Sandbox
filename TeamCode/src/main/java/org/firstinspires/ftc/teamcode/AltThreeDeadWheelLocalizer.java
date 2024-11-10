@@ -22,9 +22,9 @@ import org.firstinspires.ftc.teamcode.messages.ThreeDeadWheelInputsMessage;
 @Config
 public final class AltThreeDeadWheelLocalizer implements Localizer {
     public static class Params {
-        public double par0YTicks = -2392.980820216595; // y position of the first parallel encoder (in tick units)
-        public double par1YTicks = 2342.3606379694747; // y position of the second parallel encoder (in tick units)
-        public double perpXTicks = 2021.4200053280765; // x position of the perpendicular encoder (in tick units)
+        public double par0YTicks; // y position of the first parallel encoder (in tick units)
+        public double par1YTicks; // y position of the second parallel encoder (in tick units)
+        public double perpXTicks; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
@@ -37,6 +37,10 @@ public final class AltThreeDeadWheelLocalizer implements Localizer {
     private boolean initialized;
 
     public AltThreeDeadWheelLocalizer(HardwareMap hardwareMap, double inPerTick) {
+
+        // set PARAMS based upon the network you are connected to
+        setParams();
+
         // TODO: make sure your config has **motors** with these names (or change them)
         //   the encoders should be plugged into the slot matching the named motor
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
@@ -103,5 +107,19 @@ public final class AltThreeDeadWheelLocalizer implements Localizer {
         lastPerpPos = perpPosVel.position;
 
         return twist;
+    }
+
+    private void setParams() {
+
+        if (AltMecanumDrive.networkName.equals(PRIMARY_BOT)) {
+            PARAMS.par0YTicks = -2392.980820216595; // y position of the first parallel encoder (in tick units)
+            PARAMS.par1YTicks = 2342.3606379694747; // y position of the second parallel encoder (in tick units)
+            PARAMS.perpXTicks = 2021.4200053280765; // x position of the perpendicular encoder (in tick units)
+        } else {
+            PARAMS.par0YTicks = -2392.980820216595; // y position of the first parallel encoder (in tick units)
+            PARAMS.par1YTicks = 2342.3606379694747; // y position of the second parallel encoder (in tick units)
+            PARAMS.perpXTicks = 2021.4200053280765; // x position of the perpendicular encoder (in tick units)
+
+        }
     }
 }
