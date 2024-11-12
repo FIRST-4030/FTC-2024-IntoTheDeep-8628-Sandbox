@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.tuning;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.AccelConstraint;
 import com.acmerobotics.roadrunner.AngularVelConstraint;
 import com.acmerobotics.roadrunner.MinVelConstraint;
@@ -10,19 +9,13 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.AltMecanumDrive;
 import org.firstinspires.ftc.teamcode.TankDrive;
-import org.firstinspires.ftc.teamcode.tuning.AprilTagLocalization;
 
 import java.util.Arrays;
 
-@Disabled
-@Config
-@TeleOp(name = "SplineTest")
 public final class SplineTest extends LinearOpMode {
     @Override
 
@@ -46,8 +39,8 @@ public final class SplineTest extends LinearOpMode {
         ));
         AccelConstraint baseAccelConstraint = new ProfileAccelConstraint(-20.0, 50.0);
 
-        if (TuningOpModes.DRIVE_CLASS.equals(MecanumDrive.class)) {
-            MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
+        if (TuningOpModes.DRIVE_CLASS.equals(AltMecanumDrive.class)) {
+            AltMecanumDrive drive = new AltMecanumDrive(hardwareMap, beginPose);
 
 
 

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Config
 @Disabled
-@TeleOp(name = "TestArmSlideInit", group="8628")
+@TeleOp(name = "TestArmSlideInit")
 public class TestArmSlideInit extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

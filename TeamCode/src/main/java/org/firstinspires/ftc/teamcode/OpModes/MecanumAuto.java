@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.ComputerVision;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "MecanumAuto", group="8628")
+@Autonomous(name = "MecanumAuto")
 public final class MecanumAuto extends LinearOpMode {
     public static double INITIAL_X = -6;
     public static double INITIAL_Y = 55;
